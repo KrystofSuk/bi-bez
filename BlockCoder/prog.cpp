@@ -10,17 +10,30 @@ class Convertor{
     private:
         vector<unsigned char> _bin;
         vector<string> _hex;
-        bool _valid = true;
-        bool CheckValidity(){
-            return true;
+        void ConvertBytesToHex(string val){
+            cout << "Converting: " << val << endl;
+            for (auto it = val.cbegin() ; it != val.cend(); ++it) {
+                stringstream ss;
+                ss<< std::hex << (int)(*it);
+                string res = (ss.str());
+                cout << *it << " - " << res << endl;
+                _bin.push_back((unsigned char)(*it));
+                _hex.push_back(res);
+            }
         }
-        bool ConvertBytesToHex(string s){
-                        
-            return true;
-        }
-        bool ConvertHexToBytes(string s){
-
-            return true;
+        
+        void ConvertHexToBytes(string val){
+            cout << "Converting: " << val << endl;
+            for (auto it = val.cbegin() ; it != val.cend(); ++it) {
+                string hx = "";
+                hx += *it;
+                it++;
+                hx += *it;
+                unsigned char res = (unsigned char)std::stoul(hx, nullptr, 16);
+                cout << hx << " - " << res << endl;
+                _hex.push_back(hx);
+                _bin.push_back(res);
+            }
         }
 
 
@@ -28,15 +41,7 @@ class Convertor{
         Convertor(string val, bool hex){
 
             if(!hex){
-                cout << "Converting: " << val << endl;
-                for (auto it = val.cbegin() ; it != val.cend(); ++it) {
-                    stringstream ss;
-                    ss<< std::hex << (int)(*it);
-                    string res = (ss.str());
-                    cout << *it << " - " << res << endl;
-                    _bin.push_back((unsigned char)(*it));
-                    _hex.push_back(res);
-                }
+                ConvertBytesToHex(val);
             }
             if(hex){
                 
@@ -63,32 +68,45 @@ class Convertor{
                     }
                 };
 
-
-                cout << "Converting: " << val << endl;
-                for (auto it = val.cbegin() ; it != val.cend(); ++it) {
-                    string hx = "";
-                    hx += *it;
-                    it++;
-                    hx += *it;
-                    unsigned char res = (unsigned char)std::stoul(hx, nullptr, 16);
-                    cout << hx << " - " << res << endl;
-                    _hex.push_back(hx);
-                    _bin.push_back(res);
-                }
+                ConvertHexToBytes(val);
+                
             }
 
         }
-        const bool IsValid() const{
-            return _valid;
+
+        const vector<string> GetHex() const{
+            return _hex;
+        }
+
+        const vector<unsigned char> GetBin() const{
+            return _bin;
         }
 };
 
 int main ( int argc, char* argv[] ) {
-    /*
-    string s = "Test string";
+    string s = "70443";
     Convertor c = Convertor(s, false);
-    */
+    vector<unsigned char> b1 = c.GetBin();
+    string res;
+    for (auto it = b1.cbegin() ; it != b1.cend(); ++it) {
+        res += (char)(*it);
+    }
+    cout << res << endl;
+    /*
     string s2 = "fc57c9cfdac7202694e8c2712d1f0e8e21b8c6f6d612d6c96847e42e6257b3f9ea98466cfc8761ed5e0308311deb15";
     Convertor c2 = Convertor(s2, true);
+    string s3 = "a83fa0bcfaae5306f5c8b1144e6d6bfa01cca38ea23cf68707258b4a1b77c09185ed2a08dcf5048c3a237c5974983b";
+    Convertor c3 = Convertor(s3, true);
+    vector<unsigned char> b1 = c2.GetBin();
+    vector<unsigned char> b2 = c3.GetBin();
+    int i = 0;
+    string res;
+    for (auto it = b1.cbegin() ; it != b1.cend(); ++it) {
+        res += (char)(*it ^ b2[i]);
+        i++;
+    }
+    cout << "XOR: " << res << endl;
+    */
+
     return 0;
 }
