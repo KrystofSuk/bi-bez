@@ -13,8 +13,8 @@ int main(void) {
   //My cypher
   unsigned char ot[1024] = "Jiz nikdo nema marast nalepku!";  // open text
   unsigned char st[1024];  // sifrovany text
-  unsigned char key[EVP_MAX_KEY_LENGTH] = "COVID-19 with love";  // klic pro sifrovani
-  unsigned char iv[EVP_MAX_IV_LENGTH] = "iv";  // inicializacni vektor
+  unsigned char key[EVP_MAX_KEY_LENGTH] = "COVID-19withlove";  // klic pro sifrovani
+  unsigned char iv[EVP_MAX_IV_LENGTH] = "inicial. vektor";  // inicializacni vektor
   const char cipherName[] = "RC4";
   const EVP_CIPHER * cipher;
 
@@ -49,7 +49,7 @@ int main(void) {
   EVP_CIPHER_CTX_free(ctx);
 
   
-
+                             
   unsigned char ot2[1024] = "abcdefghijklmnopqrstuvwxyz0123";  // open text
   unsigned char st2[1024];  // sifrovany text
   int ot2Length = strlen((const char*) ot2);
@@ -111,7 +111,7 @@ int main(void) {
   
   int stZnameLength = strlen((const char*) stZname);
   int st3Length = strlen((const char*) st3);
-
+  cout << stZnameLength << endl;
 
   int t = 0;
   for (int i = 0; i < stZnameLength; i++) {
@@ -134,11 +134,12 @@ int main(void) {
     binst3[t] = res;
     t++;
   }
-  stZnameLength = strlen((const char*) binZname);
-  st3Length = strlen((const char*) binst3);
+  
+  stZnameLength = 30;
+  st3Length = 30;
 
 
-  char priv[30];
+  char priv[1024];
 
   //Xor for h
   for(int i = 0; i < stZnameLength; i++){
@@ -154,12 +155,5 @@ int main(void) {
 
 
   cout << "---------------" << endl << endl;
-
-
-
-
-
-  
-
   exit(0);
 }
